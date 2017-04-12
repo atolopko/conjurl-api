@@ -12,6 +12,7 @@ gem 'puma', '~> 3.0'
 gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+gem 'config', '~> 1.4'
 
 group :development, :test do
   gem 'rspec-rails'
