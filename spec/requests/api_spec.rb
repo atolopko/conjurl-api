@@ -21,7 +21,7 @@ describe "api", type: :request, aggregate_failures: true do
         expect(JSON.parse(response.body, symbolize_names: true)).
           to match(expected_response)
 
-        get "/api/short_urls", params: { short_url_key: 'aaaa' }
+        get "/api/short_urls/aaaa"
         expect(response).to have_http_status(:success)
         expect(JSON.parse(response.body, symbolize_names: true)).
           to match(expected_response)
