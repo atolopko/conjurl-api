@@ -1,0 +1,5 @@
+url_redirect_service_host: https://test.conjurl.com/
+
+short_url_key:
+  length: 4
+  alphabet: <%= ('a'..'d').to_a %>

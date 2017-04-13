@@ -1,0 +1,5 @@
+url_redirect_service_host: http://localhost:3000/
+
+short_url_key:
+  length: 8
+  alphabet: <%= ('0'..'9').to_a + ('a'..'z').to_a + ('A'..'Z').to_a %>
