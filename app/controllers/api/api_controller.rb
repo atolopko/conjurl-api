@@ -3,10 +3,10 @@ module Api
 
     private
 
-    def error_response(status, error_message)
-      error_response = { status: status, params: params, error: error_message }
-      Rails.logger.error(error_response)
-      render status: status, json: error_response
+    def render_error(status, error_message)
+      error_body = { status: status, params: params, error: error_message }
+      Rails.logger.error(error_body)
+      render status: status, json: error_body
     end
 
     def render_request_error(error_message)

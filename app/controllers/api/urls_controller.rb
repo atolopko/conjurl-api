@@ -9,6 +9,15 @@ module Api
       render_request_error(e.to_s)
     end
 
+    def index
+      short_url = ShortUrl[params[:short_url_key]]
+      render json: { short_url: short_url.short_url,
+                     target_url: short_url.target_url,
+                     created_at: short_url.created_at.iso8601 }
+    rescue ActiveRecord::RecordNotFound => e
+      render_error(:not_found, e.to_s)
+    end
+
     private
 
     def short_url_key_generator

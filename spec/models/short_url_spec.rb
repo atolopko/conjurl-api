@@ -22,5 +22,9 @@ describe ShortUrl, aggregate_failures: true do
     it "finds ShortUrl by short_url_key" do
       expect(ShortUrl['aaaaaa']).to be_present
     end
+
+    it "raises error if specified ShortUrl does not exist" do
+      expect { ShortUrl['aaaaab'] }.to raise_error ActiveRecord::RecordNotFound
+    end
   end
 end

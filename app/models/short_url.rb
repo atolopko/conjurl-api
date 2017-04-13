@@ -14,6 +14,6 @@ class ShortUrl < ActiveRecord::Base
   end
 
   def self.[](key)
-    find_by(key: key)
+    find_by!(key: key)
   end
 end
