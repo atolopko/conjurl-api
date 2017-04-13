@@ -16,6 +16,13 @@ describe ShortUrl, aggregate_failures: true do
       expect(short_url).to be_present
       expect(ShortUrl.find_by(key: 'aaaaaa')).to be_present
     end
+
+    it "raises error if unique key cannot be generated" do
+      expect {
+        ShortUrl.generate!(target_url: 'http://some.url/path',
+                           short_url_key_generator: short_url_key_generator)
+      }.to raise_error "ShortURL key space may be reaching capacity! Try another strategy!"
+    end
   end
 
   describe ".[]" do
