@@ -3,11 +3,11 @@
 class ShortUrlRedirectController < ApplicationController
   def redirect
     key = params[:short_url_key]
-    # TODO: Interestingly, bit.ly returns 301 (moved permanently), but
-    # our product manager wants user agents to continue to use our
-    # short URLs in the future for analytics purposes. We will return
-    # a 302, to discourage use of the redirected URL.
-    redirect_to ShortUrl[key].target_url
+    # NOTE: Interestingly, bit.ly goo.gl return 301 (Moved
+    # Permanently), so let's do the same. 302 (Found) would seem
+    # reasonable, so that user agent is encouraged to re-use the
+    # shortened URL in future requests.
+    redirect_to ShortUrl[key].target_url, status: :moved_permanently
   rescue ActiveRecord::RecordNotFound => e
     render status: :not_found
   end
