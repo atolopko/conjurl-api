@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get "/:short_url_key", to: "short_url_redirect_controller#redirect"
+  get "/:short_url_key", to: "short_url_redirect#redirect"
   
   namespace :api do
     post '/short_urls', to: 'short_urls#create'
