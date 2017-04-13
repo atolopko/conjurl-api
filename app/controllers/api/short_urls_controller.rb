@@ -19,7 +19,7 @@ module Api
     private
 
     def serialize_short_url(short_url)
-      { self: api_short_urls_url + "/#{short_url.id}",
+      { self: api_short_urls_url + "/#{short_url.key}",
         short_url: short_url.short_url,
         target_url: short_url.target_url,
         created_at: short_url.created_at.iso8601 }

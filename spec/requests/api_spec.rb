@@ -9,7 +9,7 @@ describe "api", type: :request, aggregate_failures: true do
       now = Time.now
 
       expected_response =
-        { self: %r{http://www.example.com/api/short_urls/\d+},
+        { self: %r{http://www.example.com/api/short_urls/aaaa},
           created_at: now.utc.iso8601,
           short_url: "https://test.conjurl.com/aaaa",
           target_url: "http://my.host/path?x=1" }
