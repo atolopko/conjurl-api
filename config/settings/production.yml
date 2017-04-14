@@ -1,1 +1,1 @@
-url_redirect_service_host: <%= ENV['CONJURL_URL_REDIRECT_SERVICE_HOST'] =>
+url_redirect_service_host: <%= ENV['CONJURL_URL_REDIRECT_SERVICE_HOST'] %>
