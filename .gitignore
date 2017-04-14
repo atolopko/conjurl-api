@@ -19,3 +19,8 @@
 config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
