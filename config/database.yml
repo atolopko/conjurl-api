@@ -80,7 +80,7 @@ test:
 #
 production:
   <<: *default
-  database: conjurl_production
-  host: aar1ljtokcowqh.cgixedsiejle.us-east-2.rds.amazonaws.com
-  username: dbconjurl
-  password: <%= ENV['CONJURL_DATABASE_PASSWORD'] %>
+  database: <%= ENV['RDS_DB_NAME'] %>
+  host: <%= ENV['RDS_HOST_NAME'] %>
+  username: <%= ENV['RDS_USERNAME'] %>
+  password: <%= ENV['RDS_PASSWORD'] %>
