@@ -1,1 +1,1 @@
-url_redirect_service_host: https://conjurl.com/
+url_redirect_service_host: <%= CONJURL_URL_REDIRECT_SERVICE_HOST =>
