@@ -44,9 +44,13 @@ $ rspec
 
 ** Using AWS Elastic Beanstalk:
 
-Using the AWS Elastic Beanstalk CLI (`eb`):
+Running the following from the project directory, the latest Git-committed changes will be deployed to a new AWS Elastic Beanstalk environment:
 ```
 $ eb create conjurl-prod-2 --single -i t2.micro -r us-east-2 --keyname conjurl-prod --platform 'ruby-2.3-(puma)' --database --database.username dbconjurl --database.password <YOUR_SUPER_SECURE_PASSWORD> --database.engine postgres --database.size 5
 $ eb setenv SECRET_KEY_BASE=`rails secret` CONJURL_URL_REDIRECT_SERVICE_HOST=`eb status | grep CNAME: | awk '{ print $2 }'`
+```
+To deploy new version with latest Git-commited changes:
+```
+$ eb deploy
 ```
 
