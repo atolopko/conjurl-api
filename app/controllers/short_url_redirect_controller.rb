@@ -3,6 +3,8 @@
 class ShortUrlRedirectController < ApplicationController
   def redirect
     key = params[:short_url_key]
+    short_url = ShortUrl[key]
+    RequestLogger.emit(short_url, request)
     # NOTE: Interestingly, bit.ly goo.gl return 301 (Moved
     # Permanently), so let's do the same. 302 (Found) would seem
     # reasonable, so that user agent is encouraged to re-use the

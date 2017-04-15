@@ -11,4 +11,7 @@ describe "redirect behavior", type: :request, aggregate_failures: true do
     expect(response.headers['location']).to eq 'http://some.where/else'    
   end
   
+  it "logs request" do
+    skip "pending implementation"
+  end
 end
