@@ -1,7 +1,7 @@
 module Api
   class ApiController < ApplicationController
 
-    # TODO: render server error on any propagated error
+    rescue_from StandardError, with: :render_server_error
 
     private
 

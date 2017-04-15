@@ -8,8 +8,7 @@ class ShortUrl < ActiveRecord::Base
     create!(key: key,
             target_url: target_url)
   rescue ActiveRecord::RecordNotUnique => e
-    Rails.logger.error("ShortUrl key collision: #{key}")
-    raise "ShortURL key collision. Increase key length or alphabet size."
+    raise "ShortURL key collision: #{key}"
   end
 
   def short_url

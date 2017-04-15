@@ -29,6 +29,17 @@ describe "api", type: :request, aggregate_failures: true do
           to match(expected_response)
       end
     end
+
+    it "fails when key namespace is exhausted" do
+      ActiveRecord::Base.connection.execute("SELECT setval('short_url_key_seq', 255)")
+      post "/api/short_urls", params: { target_url: 'http://my.host/path?x=1' }
+      expect(response).to have_http_status(500)
+      expect(JSON.parse(response.body, symbolize_names: true)).
+        to match(
+             status: 'internal_server_error',
+             params: { target_url: 'http://my.host/path?x=1', controller: 'api/short_urls', action: 'create' },
+             error: 'key namespace exhausted: 256 > 255')
+    end
   end
   
 end

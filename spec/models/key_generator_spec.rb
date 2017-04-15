@@ -20,14 +20,5 @@ RSpec.describe KeyGenerator, aggregate_failures: true do
                        sequence: [0].cycle)
     expect(key_generator.generate).to eq 'aaaa'
   end
-
-  it "raises error if key namespace is exhausted" do
-    key_generator =
-      KeyGenerator.new(key_length: 4,
-                       alphabet: ('a'..'d').to_a,
-                       sequence: [255, 256].to_enum)
-    expect(key_generator.generate).to eq 'dddd'
-    expect { key_generator.generate }.to raise_error "key namepsace exhausted: 256 > 255"
-  end
   
 end

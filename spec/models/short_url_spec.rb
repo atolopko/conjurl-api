@@ -21,7 +21,7 @@ describe ShortUrl, aggregate_failures: true do
       expect {
         ShortUrl.generate!(target_url: 'http://some.url/path',
                            key_generator: key_generator)
-      }.to raise_error "ShortURL key collision. Increase key length or alphabet size."
+      }.to raise_error "ShortURL key collision: aaaaaa"
     end
   end
 

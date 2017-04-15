@@ -11,7 +11,6 @@ class KeyGenerator
 
   def generate
     n = @sequence.next
-    raise "key namepsace exhausted: #{n} > #{@namespace_size - 1}" if n >= @namespace_size
     # convert the base-10 value to a base-<@radix> value, using the specified alphabet
     n.b(@radix).to_a(@alphabet).
       join.

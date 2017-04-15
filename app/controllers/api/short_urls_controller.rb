@@ -37,7 +37,7 @@ module Api
       key_namespace_size = Settings.short_url_key.alphabet.size ** Settings.short_url_key.length
       @sequence_generator ||=
         UnpredictableSequenceGenerator.new(
-          base_generator: DatabaseSequenceGenerator.new,
+          base_generator: DatabaseSequenceGenerator.new(key_namespace_size: key_namespace_size),
           key_namespace_size: key_namespace_size,
           step: (key_namespace_size * Settings.short_url_key.step_coeff).to_i)
     end
