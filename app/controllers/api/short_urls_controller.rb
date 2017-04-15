@@ -3,7 +3,7 @@ module Api
     def create
       short_url =
         ShortUrl.generate!(target_url: params[:target_url],
-                           short_url_key_generator: short_url_key_generator)
+                           key_generator: key_generator)
       render json: serialize_short_url(short_url)
     rescue URI::InvalidURIError => e
       render_request_error(e.to_s)
@@ -25,11 +25,21 @@ module Api
         created_at: short_url.created_at.iso8601 }
     end
 
-    def short_url_key_generator
-      @short_url_key_generator ||=
-        RandomShortUrlKeyGenerator.new(
+    def key_generator
+      @key_generator ||=
+        KeyGenerator.new(
           key_length: Settings.short_url_key.length,
-          alphabet: Settings.short_url_key.alphabet)
+          alphabet: Settings.short_url_key.alphabet,
+          sequence: sequence_generator)
+    end
+
+    def sequence_generator
+      key_namespace_size = Settings.short_url_key.alphabet.size ** Settings.short_url_key.length
+      @sequence_generator ||=
+        UnpredictableSequenceGenerator.new(
+          base_generator: DatabaseSequenceGenerator.new,
+          key_namespace_size: key_namespace_size,
+          step: (key_namespace_size * Settings.short_url_key.step_coeff).to_i)
     end
   end
 end

@@ -1,14 +1,14 @@
 require "rails_helper"
 
 describe ShortUrl, aggregate_failures: true do
-  let(:short_url_key_generator) {
+  let(:key_generator) {
     d = double("TestKeyGenerator")
     allow(d).to receive(:generate).and_return('aaaaaa')
     d
   }
   let!(:short_url) {
     ShortUrl.generate!(target_url: 'http://some.url/path',
-                       short_url_key_generator: short_url_key_generator)
+                       key_generator: key_generator)
   }
 
   describe ".generate!" do
@@ -20,8 +20,8 @@ describe ShortUrl, aggregate_failures: true do
     it "raises error if unique key cannot be generated" do
       expect {
         ShortUrl.generate!(target_url: 'http://some.url/path',
-                           short_url_key_generator: short_url_key_generator)
-      }.to raise_error "ShortURL key space may be reaching capacity! Try another strategy!"
+                           key_generator: key_generator)
+      }.to raise_error "ShortURL key collision. Increase key length or alphabet size."
     end
   end
 

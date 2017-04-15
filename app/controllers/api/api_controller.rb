@@ -1,6 +1,8 @@
 module Api
   class ApiController < ApplicationController
 
+    # TODO: render server error on any propagated error
+
     private
 
     def render_error(status, error_message)

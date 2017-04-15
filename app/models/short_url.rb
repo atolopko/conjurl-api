@@ -3,18 +3,13 @@ class ShortUrl < ActiveRecord::Base
   validates :target_url, presence: true
 
   def self.generate!(target_url:,
-                     short_url_key_generator:)
-    tries = 0
-    begin
-      key = short_url_key_generator.generate(target_url)
-      create!(key: key,
-              target_url: target_url)
-    rescue ActiveRecord::RecordNotUnique => e
-      Rails.logger.warn("short_url_key collision: #{key}")
-      raise "ShortURL key space may be reaching capacity! Try another strategy!" if tries == 3
-      tries += 1
-      retry
-    end
+                     key_generator:)
+    key = key_generator.generate
+    create!(key: key,
+            target_url: target_url)
+  rescue ActiveRecord::RecordNotUnique => e
+    Rails.logger.error("ShortUrl key collision: #{key}")
+    raise "ShortURL key collision. Increase key length or alphabet size."
   end
 
   def short_url
