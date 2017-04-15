@@ -6,4 +6,4 @@ short_url_key:
   # Used to create unpredictable sequence of keys. Must be a prime to
   # ensure full utilization of key namespace.
   # http://www.wolframalpha.com/input/?i=NextPrime[(10 %2B 26 * 2)^8,-1]
-  step: 1 # 218_340_105_584_893
+  step: 28384213726367
