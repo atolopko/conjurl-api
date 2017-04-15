@@ -6,8 +6,8 @@ RSpec.describe RequestLogger do
       ShortUrl.create!(key: 'aaaa',
                        target_url: 'http://some.where/else')
     request = double("Request",
-                     ip: '127.0.0.1',
-                     headers: { 'referer' => 'http://refer.er/page' })
+                     remote_ip: '127.0.0.1',
+                     headers: { 'Referer' => 'http://refer.er/page' })
     now = Time.now.utc
     Timecop.freeze(now) do
       RequestLogger.emit(short_url, request)

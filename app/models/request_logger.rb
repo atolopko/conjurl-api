@@ -5,7 +5,7 @@ class RequestLogger < ActiveRecord::Base
   def self.emit(short_url, request)
     ShortUrlRequest.create!(short_url: short_url,
                            requested_at: Time.now.utc, # TODO: request time available?
-                           ip_address: request.ip,
-                           referrer: request.headers['referer'])
+                           ip_address: request.remote_ip,
+                           referrer: request.headers['Referer'])
   end
 end
