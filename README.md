@@ -9,24 +9,65 @@ anywhere!
 
 Using [HTTPie](http://httpie.org):
 ```
+
 # Create a new short URL:
 $ http -b localhost:3000/api/short_urls target_url=http://popurls.com
 {
-    "created_at": "2017-04-14T22:04:13Z",
-    "self": "http://localhost:3000/api/short_urls/DtTtabRy",
-    "short_url": "http://localhost:3000/DtTtabRy",
+    "created_at": "2017-04-15T23:51:23Z",
+    "self_ref": "http://localhost:3000/api/short_urls/5zXwf0yv",
+    "short_url": "http://localhost:3000/5zXwf0yv",
+    "statistics_ref": "http://localhost:3000/api/short_urls/5zXwf0yv/statistics",
     "target_url": "http://popurls.com"
 }
+
 # Find it again:
-$ http localhost:3000/api/short_urls/DtTtabRy
+$ http -b 'localhost:3000/5zXwf0yv'
 {
-    "created_at": "2017-04-14T22:04:13Z",
-    "self": "http://localhost:3000/api/short_urls/DtTtabRy",
-    "short_url": "http://localhost:3000/DtTtabRy",
+    "created_at": "2017-04-15T23:51:23Z",
+    "self_ref": "http://localhost:3000/api/short_urls/5zXwf0yv",
+    "short_url": "http://localhost:3000/5zXwf0yv",
+    "statistics_ref": "http://localhost:3000/api/short_urls/5zXwf0yv/statistics",
     "target_url": "http://popurls.com"
 }
+
 # Navigate to target page via the short URL (Mac OSX):
-$ http localhost:3000/api/short_urls/DtTtabRy | jq -r 'short_url' | xargs open
+$ http localhost:3000/api/short_urls/5zXwf0yv | jq -r 'short_url' | xargs open
+<html><body>You are being <a href="http://popurls.com">redirected</a>.</body></html>
+
+# Retrieve statistics:
+$ http -b localhost:3000/api/short_urls/5zXwf0yv/statistics
+{
+    "last_24_hours": {
+        "clicks": 1,
+        "top_ip_addresses": {
+            "::1": 1
+        },
+        "top_referrers": {
+            "": 1
+        },
+        "unique_ip_addresses": 1,
+        "unique_referrers": 0
+    },
+    "lifetime": {
+        "clicks": 1,
+        "top_ip_addresses": {
+            "::1": 1
+        },
+        "top_referrers": {
+            "": 1
+        },
+        "unique_ip_addresses": 1,
+        "unique_referrers": 0
+    },
+    "self_ref": "http://localhost:3000/api/short_urls/5zXwf0yv/statistics",
+    "short_url": {
+        "created_at": "2017-04-15T23:51:23Z",
+        "self_ref": "http://localhost:3000/api/short_urls/5zXwf0yv",
+        "short_url": "http://localhost:3000/5zXwf0yv",
+        "statistics_ref": "http://localhost:3000/api/short_urls/5zXwf0yv/statistics",
+        "target_url": "http://popurls.com"
+    }
+}
 ```
 
 # Development
