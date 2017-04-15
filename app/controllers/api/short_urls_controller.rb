@@ -16,13 +16,32 @@ module Api
       render_error(:not_found, e.to_s)
     end
 
+    def statistics
+      short_url = ShortUrl[params[:short_url_key]]
+      statistics = ShortUrlStatistics.new(short_url)
+      render json: serialize_short_url_statistics(statistics)
+    rescue ActiveRecord::RecordNotFound => e
+      render_error(:not_found, e.to_s)
+    end
+
     private
 
     def serialize_short_url(short_url)
-      { self: api_short_urls_url + "/#{short_url.key}",
+      {
+        self_ref: api_short_urls_url + "/#{short_url.key}",
+        statistics_ref: api_short_urls_url + "/#{short_url.key}/statistics",
         short_url: short_url.short_url,
         target_url: short_url.target_url,
-        created_at: short_url.created_at.iso8601 }
+        created_at: short_url.created_at.iso8601
+      }
+    end
+
+    def serialize_short_url_statistics(statistics)
+      short_url = statistics.short_url
+      {
+        self_ref: api_short_urls_url + "/#{short_url.key}/statistics",
+        short_url: serialize_short_url(short_url)
+      }.merge(statistics.calculate)
     end
 
     def key_generator
