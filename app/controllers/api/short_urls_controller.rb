@@ -39,7 +39,7 @@ module Api
         UnpredictableSequenceGenerator.new(
           base_generator: DatabaseSequenceGenerator.new(key_namespace_size: key_namespace_size),
           key_namespace_size: key_namespace_size,
-          step: (key_namespace_size * Settings.short_url_key.step_coeff).to_i)
+          step: Settings.short_url_key.step)
     end
   end
 end

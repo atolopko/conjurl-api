@@ -7,7 +7,7 @@ class DatabaseSequenceGenerator
     n = ActiveRecord::Base.connection.
           execute("SELECT nextval('short_url_key_seq')").
           first['nextval']
-    raise "key namespace exhausted: #{n} > #{@key_namespace_size - 1}" if n >= @key_namespace_size
+    raise "key namespace exhausted: #{n} > #{@key_namespace_size}" if n > @key_namespace_size
     n
   end
 end

@@ -3,5 +3,7 @@ url_redirect_service_host: http://localhost:3000/
 short_url_key:
   length: 8
   alphabet: <%= ('0'..'9').to_a + ('a'..'z').to_a + ('A'..'Z').to_a %>
-  # Used to create unpredictable sequence of keys.
-  step_coeff: 0.87
+  # Used to create unpredictable sequence of keys. Must be a prime to
+  # ensure full utilization of key namespace.
+  # http://www.wolframalpha.com/input/?i=NextPrime[(10 %2B 26 * 2)^8,-1]
+  step: 1 # 218_340_105_584_893
