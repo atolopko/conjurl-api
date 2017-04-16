@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170415123056) do
+ActiveRecord::Schema.define(version: 20170416012812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accounts", force: :cascade do |t|
+    t.datetime "created_at",        default: -> { "now()" }, null: false
+    t.datetime "updated_at"
+    t.text     "name",                                       null: false
+    t.uuid     "public_identifier",                          null: false
+  end
 
   create_table "short_url_requests", force: :cascade do |t|
     t.integer  "short_url_id", null: false
@@ -26,8 +33,10 @@ ActiveRecord::Schema.define(version: 20170415123056) do
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.text     "key",                                 null: false
     t.text     "target_url",                          null: false
+    t.integer  "account_id"
     t.index ["key"], name: "short_urls_key_key", unique: true, using: :btree
   end
 
   add_foreign_key "short_url_requests", "short_urls", name: "short_url_requests_short_url_id_fkey"
+  add_foreign_key "short_urls", "accounts", name: "short_urls_account_id_fkey"
 end

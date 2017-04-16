@@ -1,1 +1,3 @@
 url_redirect_service_host: <%= ENV['CONJURL_URL_REDIRECT_SERVICE_HOST'] %>
+
+jwt_secret: <%= ENV['CONJURL_JWT_SECRET'] %>

@@ -13,7 +13,9 @@ gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'config', '~> 1.4'
-gem 'radix'
+gem 'radix', '~> 2.2', '>= 2.2.1'
+gem 'jwt', '~> 1.5', '>= 1.5.4'
+gem 'uuid', '~> 2.3', '>= 2.3.8'
 
 group :development, :test do
   gem 'rspec-rails'

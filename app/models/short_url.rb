@@ -2,6 +2,7 @@ class ShortUrl < ActiveRecord::Base
   validates :key, presence: true
   validates :target_url, presence: true
 
+  belongs_to :account, optional: true
   has_many :short_url_requests
 
   def self.generate!(target_url:,

@@ -53,11 +53,14 @@ GEM
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     i18n (0.8.1)
+    jwt (1.5.6)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
+    macaddr (1.7.1)
+      systemu (~> 2.6.2)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
     method_source (0.8.2)
@@ -137,11 +140,14 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    systemu (2.6.5)
     thor (0.19.4)
     thread_safe (0.3.6)
     timecop (0.8.1)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
+    uuid (2.3.8)
+      macaddr (~> 1.0)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -152,16 +158,18 @@ PLATFORMS
 DEPENDENCIES
   byebug
   config (~> 1.4)
+  jwt (~> 1.5, >= 1.5.4)
   listen (~> 3.0.5)
   pg (~> 0.18)
   pry-byebug
   pry-rails
   puma (~> 3.0)
-  radix
+  radix (~> 2.2, >= 2.2.1)
   rails (~> 5.0.0, >= 5.0.0.1)
   redis (~> 3.0)
   rspec-rails
   timecop
+  uuid (~> 2.3, >= 2.3.8)
 
 BUNDLED WITH
    1.14.6
