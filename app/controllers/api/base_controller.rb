@@ -1,5 +1,5 @@
 module Api
-  class ApiController < ApplicationController
+  class BaseController < ApplicationController
 
     rescue_from StandardError, with: :render_server_error
     rescue_from AuthenticationError, with: :render_authentication_error

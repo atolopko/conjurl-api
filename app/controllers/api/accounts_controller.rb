@@ -1,5 +1,5 @@
 module Api
-  class AccountsController < ApiController
+  class AccountsController < BaseController
     
     def create
       account, jwt = Authentication.register(name: params[:name])

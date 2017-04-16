@@ -1,5 +1,5 @@
 module Api
-  class ShortUrlsController < ApiController
+  class ShortUrlsController < BaseController
     def create
       account = authenticate(allow_guest: true)
       short_url =
