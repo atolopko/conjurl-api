@@ -19,10 +19,10 @@ RSpec.describe "Accounts" do
                created_at: now.utc.iso8601,
                public_identifier: /.+/,
                name: 'Linkoln Longfellow',
-               short_urls: 0
+               short_urls_ref: %r{http://www.example.com/api/accounts/.+/short_urls},
+               short_urls: 0 
              }
            })
-
     
     get "/api/accounts/#{response_data[:account][:public_identifier]}",
         headers: { 'Authorization' => "Bearer #{response_data[:jwt]}" }
@@ -34,6 +34,7 @@ RSpec.describe "Accounts" do
              created_at: now.utc.iso8601,
              public_identifier: /.+/,
              name: 'Linkoln Longfellow',
+             short_urls_ref: %r{http://www.example.com/api/accounts/.+/short_urls},
              short_urls: 0
            })
   end

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
     post '/accounts', to: 'accounts#create'
     get  '/accounts/:public_identifier', to: 'accounts#index'
+    get  '/accounts/:public_identifier/short_urls', to: 'accounts#short_urls'
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
