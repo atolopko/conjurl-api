@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get "/health", to: "health#index"
+
   get "/:short_url_key", to: "short_url_redirect#redirect"
   
   namespace :api do
