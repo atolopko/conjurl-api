@@ -59,7 +59,7 @@ describe "api", type: :request, aggregate_failures: true do
         to match(
              status: 'internal_server_error',
              params: { target_url: 'http://my.host/path?x=1', controller: 'api/short_urls', action: 'create' },
-             error: 'key namespace exhausted: 257 > 256')
+             error: 'key namespace exhausted (size=256)')
     end
 
     describe "unauthenticated access" do

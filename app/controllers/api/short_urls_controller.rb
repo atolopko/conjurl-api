@@ -56,15 +56,16 @@ module Api
         KeyGenerator.new(
           key_length: Settings.short_url_key.length,
           alphabet: Settings.short_url_key.alphabet,
-          sequence: sequence_generator)
+          sequence: sequence)
     end
 
-    def sequence_generator
+    def sequence
       key_namespace_size = Settings.short_url_key.alphabet.size ** Settings.short_url_key.length
       @sequence_generator ||=
-        UnpredictableSequenceGenerator.new(
-          base_generator: DatabaseSequenceGenerator.new(key_namespace_size: key_namespace_size),
-          key_namespace_size: key_namespace_size,
+        Sequence::UnpredictableOrdering.new(
+          base_sequence: Sequence::Postgres.new(sequence_name: 'short_url_key_seq',
+                                                max_value: key_namespace_size),
+          max_value: key_namespace_size,
           step: Settings.short_url_key.step)
     end
   end
