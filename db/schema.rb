@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 20170416012812) do
     t.datetime "updated_at"
     t.text     "name",                                       null: false
     t.uuid     "public_identifier",                          null: false
+    t.index ["name"], name: "accounts_name_key", unique: true, using: :btree
+    t.index ["public_identifier"], name: "accounts_public_identifier_key", unique: true, using: :btree
   end
 
   create_table "short_url_requests", force: :cascade do |t|
@@ -34,6 +36,7 @@ ActiveRecord::Schema.define(version: 20170416012812) do
     t.text     "key",                                 null: false
     t.text     "target_url",                          null: false
     t.integer  "account_id"
+    t.index ["account_id"], name: "short_urls_account_id_ndx", where: "(account_id IS NOT NULL)", using: :btree
     t.index ["key"], name: "short_urls_key_key", unique: true, using: :btree
   end
 

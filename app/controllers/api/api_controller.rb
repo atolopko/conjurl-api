@@ -2,21 +2,20 @@ module Api
   class ApiController < ApplicationController
 
     rescue_from StandardError, with: :render_server_error
+    rescue_from AuthenticationError, with: :render_authentication_error
+    rescue_from AuthorizationError, with: :render_authorization_error
 
     private
 
-    def authenticate
-      match = request.headers['Authorization'].match /Bearer (?<jwt>.+)/
-      account = jwt = nil
-      if match
-        jwt = match[:jwt]
-        account = Authentication.authenticate(jwt)
-        unless account
-          render_request_error("authentication failed", status: 401)
-          return
-        end
+    def authenticate(allow_guest: false)
+      auth = request.headers['Authorization']
+      if auth.nil?
+        return nil if allow_guest
+        raise AuthenticationError.new(nil, "endpoint requires Authorization header")
       end
-      yield account, jwt
+      match = auth.match(/Bearer (?<jwt>.+)/) or
+        raise AuthenticationError.new(nil, "invalid Authorization header value")
+      Authentication.authenticate(match[:jwt])
     end
 
     def render_error(status, error_message)
@@ -29,9 +28,18 @@ module Api
       render_error(status, error_message)
     end
 
-    def render_server_error(error_message)
+    def render_server_error(error)
       # TODO: also send ops alert!
-      render_error(:internal_server_error, error_message)
+      Rails.logger.error(error)
+      render_error(:internal_server_error, error.message)
+    end
+
+    def render_authentication_error(error)
+      render_request_error(error.message, status: 401) # 401 is less confusing than :unauthorized
+    end
+
+    def render_authorization_error(error)
+      render_request_error(error.message, status: :forbidden)
     end
 
   end

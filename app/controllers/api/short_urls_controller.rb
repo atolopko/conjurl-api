@@ -1,8 +1,10 @@
 module Api
   class ShortUrlsController < ApiController
     def create
+      account = authenticate(allow_guest: true)
       short_url =
         ShortUrl.generate!(target_url: params[:target_url],
+                           account: account,
                            key_generator: key_generator)
       render json: serialize_short_url(short_url)
     rescue URI::InvalidURIError => e
@@ -10,14 +12,18 @@ module Api
     end
 
     def index
+      account = authenticate
       short_url = ShortUrl[params[:short_url_key]]
+      raise AuthorizationError if short_url.account != account
       render json: serialize_short_url(short_url)
     rescue ActiveRecord::RecordNotFound => e
       render_error(:not_found, e.to_s)
     end
 
     def statistics
+      account = authenticate
       short_url = ShortUrl[params[:short_url_key]]
+      raise AuthorizationError if short_url.account != account
       statistics = ShortUrlStatistics.new(short_url)
       render json: serialize_short_url_statistics(statistics)
     rescue ActiveRecord::RecordNotFound => e
@@ -30,6 +36,7 @@ module Api
       {
         self_ref: api_short_urls_url + "/#{short_url.key}",
         statistics_ref: api_short_urls_url + "/#{short_url.key}/statistics",
+#        account_ref: api_accounts_url + "/#{short_url.account.public_identifier}",
         short_url: short_url.short_url,
         target_url: short_url.target_url,
         created_at: short_url.created_at.iso8601

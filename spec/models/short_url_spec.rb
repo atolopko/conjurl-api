@@ -8,6 +8,7 @@ describe ShortUrl, aggregate_failures: true do
   }
   let!(:short_url) {
     ShortUrl.generate!(target_url: 'http://some.url/path',
+                       account: nil,
                        key_generator: key_generator)
   }
 
@@ -20,6 +21,7 @@ describe ShortUrl, aggregate_failures: true do
     it "raises error if unique key cannot be generated" do
       expect {
         ShortUrl.generate!(target_url: 'http://some.url/path',
+                           account: nil,
                            key_generator: key_generator)
       }.to raise_error "ShortURL key collision: aaaaaa"
     end

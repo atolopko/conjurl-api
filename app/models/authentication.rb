@@ -17,8 +17,8 @@ class Authentication
         verify_aud: true)
       account_pid = payload['sub']
       Account.find_by(public_identifier: account_pid)
-    rescue JWT::DecodeError
-      nil
+    rescue JWT::DecodeError => e
+      raise AuthenticationError.new(jwt, e.message)
     end
 
     private

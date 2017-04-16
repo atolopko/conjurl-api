@@ -3,30 +3,29 @@ module Api
     
     def create
       account, jwt = Authentication.register(name: params[:name])
-      render json: serialize_account(account, jwt)
+      render json: {
+               jwt: jwt,
+               account: serialize_account(account)
+             }
     rescue ActiveRecord::RecordNotUnique
       render_request_error("account already exists")
     end
 
     def index
-      authenticate do |account, jwt|
-        if params[:public_identifier] != account.public_identifier
-          render_request_error("not your account", status: 403)
-        else
-          render json: serialize_account(account, jwt)
-        end
-      end
+      account = authenticate
+      raise AuthorizationError if params[:public_identifier] != account.public_identifier
+      render json: serialize_account(account)
     end
 
     private
 
-    def serialize_account(account, jwt)
+    def serialize_account(account)
       {
         self_ref: api_accounts_url + "/#{account.public_identifier}",
-        created_at: account.created_at,
+        created_at: account.created_at.utc.iso8601,
         name: account.name,
         public_identifier: account.public_identifier,
-        jwt: jwt
+        short_urls: account.short_urls.count
       }
     end
   end

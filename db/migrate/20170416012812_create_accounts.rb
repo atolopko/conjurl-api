@@ -10,7 +10,7 @@ class CreateAccounts < ActiveRecord::Migration[5.0]
       );
 
       ALTER TABLE short_urls ADD COLUMN account_id INT NULL REFERENCES accounts;
-      CREATE INDEX short_urls_account_id_ndx ON short_urls (account_id) WHERE account IS NOT NULL;
+      CREATE INDEX short_urls_account_id_ndx ON short_urls (account_id) WHERE account_id IS NOT NULL;
     SQL
   end
 

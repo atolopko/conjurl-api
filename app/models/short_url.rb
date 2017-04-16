@@ -6,9 +6,11 @@ class ShortUrl < ActiveRecord::Base
   has_many :short_url_requests
 
   def self.generate!(target_url:,
+                     account:,
                      key_generator:)
     key = key_generator.generate
     create!(key: key,
+            account: account,
             target_url: target_url)
   rescue ActiveRecord::RecordNotUnique => e
     raise "ShortURL key collision: #{key}"
