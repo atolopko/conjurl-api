@@ -29,7 +29,8 @@ class Authentication
         aud: 'conjurl',
         iat: Time.now.to_i,
         # TODO: exp: Time.now.to_i + 1.day,
-        sub: account.public_identifier
+        sub: account.public_identifier,
+        name: account.name
       }
       JWT.encode payload, Settings.jwt_secret, 'HS256'
     end
