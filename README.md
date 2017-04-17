@@ -120,7 +120,8 @@ See `config/setting.yml` and `config/settings/<env>.yml`.
 ## Setup
 
 ```
-rails db:setup
+rails db:create
+rails db:migrate
 ```
 
 ## Run the tests
@@ -132,7 +133,7 @@ $ rspec
 ## Run server (localhost)
 
 ```
-$ rails server
+$ rails server -p 3001
 ```
 
 # Production Deployment Instructions
