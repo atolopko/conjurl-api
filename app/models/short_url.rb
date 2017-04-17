@@ -1,6 +1,7 @@
 class ShortUrl < ActiveRecord::Base
   validates :key, presence: true
   validates :target_url, presence: true
+  validate :target_url_valid
 
   belongs_to :account, optional: true
   has_many :short_url_requests
@@ -12,7 +13,7 @@ class ShortUrl < ActiveRecord::Base
     create!(key: key,
             account: account,
             target_url: target_url)
-  rescue ActiveRecord::RecordNotUnique => e
+  rescue ActiveRecord::RecordNotUnique
     raise "ShortURL key collision: #{key}"
   end
 
@@ -22,5 +23,20 @@ class ShortUrl < ActiveRecord::Base
 
   def self.[](key)
     find_by!(key: key)
+  end
+
+  private
+
+  def target_url_valid
+    valid =
+      begin
+        uri = URI.parse(target_url)
+        %w{ http https }.include? uri.scheme
+      rescue URI::InvalidURIError
+        false
+      end
+    unless valid
+      errors[:target_url] << "is not a valid URL"
+    end
   end
 end

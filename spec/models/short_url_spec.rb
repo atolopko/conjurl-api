@@ -25,6 +25,15 @@ describe ShortUrl, aggregate_failures: true do
                            key_generator: key_generator)
       }.to raise_error "ShortURL key collision: aaaaaa"
     end
+
+    it "is invalid if target_url is not a valid URL" do
+      allow(key_generator).to receive(:generate).and_return('aaaaab')
+      expect {
+        ShortUrl.generate!(target_url: 'not_a_url',
+                           account: nil,
+                           key_generator: key_generator)
+      }.to raise_error ActiveRecord::RecordInvalid
+    end
   end
 
   describe ".[]" do
