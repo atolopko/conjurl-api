@@ -9,6 +9,10 @@ class ShortUrl < ActiveRecord::Base
   def self.generate!(target_url:,
                      account:,
                      key_generator:)
+    target_url = target_url.strip
+    unless target_url =~ %r{^.+://}
+      target_url = "http://#{target_url}"
+    end
     key = key_generator.generate
     create!(key: key,
             account: account,

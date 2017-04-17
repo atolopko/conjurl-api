@@ -26,10 +26,19 @@ describe ShortUrl, aggregate_failures: true do
       }.to raise_error "ShortURL key collision: aaaaaa"
     end
 
+    it "adds HTTP schema to target_url if missing" do
+      allow(key_generator).to receive(:generate).and_return('aaaaab')
+      short_url =
+        ShortUrl.generate!(target_url: 'some.url/path',
+                           account: nil,
+                           key_generator: key_generator)
+      expect(short_url.target_url).to eq 'http://some.url/path'
+    end
+
     it "is invalid if target_url is not a valid URL" do
       allow(key_generator).to receive(:generate).and_return('aaaaab')
       expect {
-        ShortUrl.generate!(target_url: 'not_a_url',
+        ShortUrl.generate!(target_url: 'xyz://notauri',
                            account: nil,
                            key_generator: key_generator)
       }.to raise_error ActiveRecord::RecordInvalid
