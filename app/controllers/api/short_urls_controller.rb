@@ -7,9 +7,6 @@ module Api
                            account: account,
                            key_generator: key_generator)
       render json: serialize_short_url(short_url)
-    rescue ActiveRecord::RecordInvalid => e
-      validation_errors = e.record.errors.full_messages.join(',')
-      render_request_error(validation_errors)
     end
 
     def index

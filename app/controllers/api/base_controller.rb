@@ -4,6 +4,7 @@ module Api
     rescue_from StandardError, with: :render_server_error
     rescue_from AuthenticationError, with: :render_authentication_error
     rescue_from AuthorizationError, with: :render_authorization_error
+    rescue_from ActiveRecord::RecordInvalid, with: :record_invalid_error
 
     private
 
@@ -42,5 +43,9 @@ module Api
       render_request_error(error.message, status: :forbidden)
     end
 
+    def record_invalid_error(error)
+      validation_errors = error.record.errors.full_messages.join(',')
+      render_request_error(validation_errors)
+    end
   end
 end

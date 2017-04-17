@@ -7,7 +7,8 @@ module Api
                jwt: jwt,
                account: serialize_account(account)
              }
-    rescue ActiveRecord::RecordNotUnique
+    rescue ActiveRecord::RecordInvalid => e
+      validation_errors = e.record.errors.full_messages.join(',')
       render_request_error("account already exists")
     end
 
