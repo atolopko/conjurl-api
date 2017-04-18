@@ -1,0 +1,1 @@
+http -b $CONJURL/api/accounts/`cat .conjurl_pid`/short_urls "`cat .conjurl_auth`"

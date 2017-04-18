@@ -1,0 +1,1 @@
+http -b $CONJURL/api/short_urls/$1/statistics "`cat .conjurl_auth`"

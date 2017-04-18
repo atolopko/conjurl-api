@@ -1,0 +1,10 @@
+RESP=`http -b $CONJURL/api/accounts name="$1"`
+echo $RESP | jq .
+NAME=`echo $RESP | jq -r .account.name`
+JWT=`echo $RESP | jq -r .jwt`
+PID=`echo $RESP | jq -r .account.public_identifier`
+echo Created account for $NAME
+AUTH="Authorization: Bearer $JWT"
+echo $AUTH
+echo "$AUTH" > .conjurl_auth
+echo "$PID" > .conjurl_pid

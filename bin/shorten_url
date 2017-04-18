@@ -1,0 +1,1 @@
+http -b $CONJURL/api/short_urls target_url=$1 "`cat .conjurl_auth`"
