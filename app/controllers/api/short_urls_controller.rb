@@ -34,7 +34,7 @@ module Api
       {
         self_ref: api_short_urls_url + "/#{short_url.key}",
         statistics_ref: api_short_urls_url + "/#{short_url.key}/statistics",
-#        account_ref: api_accounts_url + "/#{short_url.account.public_identifier}",
+        # account_ref: api_accounts_url + "/#{short_url.account.public_identifier}",
         short_url: short_url.short_url,
         target_url: short_url.target_url,
         created_at: short_url.created_at.iso8601
