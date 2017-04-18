@@ -24,3 +24,5 @@ config/environments/*.local.yml
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+TAGS
