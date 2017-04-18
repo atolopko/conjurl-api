@@ -3,9 +3,8 @@ url_redirect_service_host: http://localhost:3001/
 short_url_key:
   length: 8
   alphabet: <%= ('0'..'9').to_a + ('a'..'z').to_a + ('A'..'Z').to_a %>
-  # Used to create unpredictable sequence of keys. Must be a prime to
-  # ensure full utilization of key namespace.
-  # http://www.wolframalpha.com/input/?i=NextPrime[(10 %2B 26 * 2)^8,-1]
+  # Used to create unpredictable sequence of keys. To ensure full
+  # utilization of key namespace, GCD(step, key_namespace_size)=1.
   step: 28384213726367
 
 jwt_secret: soverysecretindeed
